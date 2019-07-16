@@ -16,6 +16,11 @@ body, html {
   width: 100%;
   height: 100%;
 }
+h1 {
+  color: #2a2525;
+  font-style: italic;
+  font-family: cursive;
+}
 body {
   margin: 0;
   padding: 0;

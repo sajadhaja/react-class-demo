@@ -19,7 +19,7 @@ export default class Greeting extends React.Component {
   render() {
     return (          
           <section>
-            <h1>***React Class Demo***</h1>
+            <h1>* React Class Demo *</h1>
             <Row label="Name">
               <input
                 value={this.state.name}
