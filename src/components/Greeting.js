@@ -1,61 +1,84 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import Row from './Row';
-import { ThemeContext, LocaleContext } from './context';
+import { ThemeContext, LocaleContext } from './context'
 
-const Greeting = () => {
-  const name = useFormInput('Mary');
-  const surname = useFormInput('Poppins');
-  const theme = useContext(ThemeContext);
-  const locale = useContext(LocaleContext);
-  const width = useWindowWidth();
-  const title = 'React Hooks Demo';
-  useDocumentTitle(`${name.value} ${surname.value} - ${title}`);
+export default class Greeting extends React.Component {
 
-  return (
-    <section className={theme}>
-      <Row label="Name">
-        <input {...name} />
-      </Row>
-      <Row label="Surname">
-        <input {...surname} />
-      </Row>
-      <Row label='Language'>
-        {locale}
-      </Row>
-      <Row label='Width'>
-        {width}
-      </Row>
-    </section>
-  );
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Tom',
+      surName: 'Mathew',
+      width: window.innerWidth
+    }
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleSurNameChange = this.handleSurNameChange.bind(this);
+    this.handleResize = this.handleResize.bind(this);
 
-const useFormInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
-  const handleChange = (e) => {
-    setValue(e.target.value);
   }
-  return {
-    value,
-    onChange: handleChange
-  };
-}
+  handleNameChange(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
 
-const useDocumentTitle = (title) => {
-  useEffect(() => {
-    document.title = title;
-  });
-}
+  handleSurNameChange(e) {
+    this.setState({
+      surName: e.target.value
+    });
+  }
 
-const useWindowWidth = () => {
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
-  return width;
-}
+  componentDidMount() {
+    document.title = this.state.name + ' ' + this.state.surName;
+    window.addEventListener('resize',this.handleResize);
+  }
 
-export default Greeting;
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.name != this.state.name) {
+      document.title = this.state.name + ' ' + this.state.surName;
+    }
+  }
+
+  componentWillMount() {
+    console.log("@@@Unmount");
+    window.removeEventListener('resize',this.handleResize);
+  }
+
+  handleResize() {
+    this.setState({
+      width: window.innerWidth
+    })
+  }
+
+  render() {
+    return (
+      <ThemeContext>
+        {theme => (
+          <section className={theme}>
+            <Row label="Name">
+              <input
+                value={this.state.name}
+                onChange={this.handleNameChange} />
+            </Row>
+            <Row label="Surname">
+              <input
+                value={this.state.surName}
+                onChange={this.handleSurNameChange} />
+            </Row>
+            <LocaleContext>
+              {locale => (
+                <Row label="Language">
+                  {locale}
+                </Row>
+              )}
+            </LocaleContext>
+            <Row label="width">
+              {this.state.width}
+            </Row>
+          </section>
+        )}
+      </ThemeContext>
+
+    );
+  }
+}

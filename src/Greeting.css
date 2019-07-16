@@ -82,9 +82,9 @@ section input {
 
 .theme-golden {
   font-family: 'Playfair Display', serif;
-  background: #ffc42b;
-  border-top: 2px solid #ffd979;
-  border-bottom-color: #b48700;
+  background: #f08383;
+  border-top: 2px solid #f76565;
+  border-bottom-color: #d60c0c;
 }
 .theme-golden .row,
 .theme-golden .row-content input {
@@ -95,20 +95,20 @@ section input {
   font-style: italic;
 }
 .theme-golden .row-content input:focus {
-  background-color: #B68B1B;
+  background-color: #db4040;
 }
 .theme-golden .row-content input:focus::selection {
-  background: #ffea98;
+  background: #f78d8d;;
 }
 .theme-golden .row-content input:focus::-moz-selection {
-  background: #ffea98;
+  background: #f78d8d;;
 }
 .theme-golden .row {
   position: relative;
   z-index: 1;
 }
 .theme-golden .row:before {
-  border-top: 1px solid #d4990d;
+  border-top: 1px solid #fa6767;
   content: "";
   margin: 0 auto;
   position: absolute;
@@ -120,8 +120,7 @@ section input {
   z-index: -1;
 }
 .theme-golden .row-title {
-  color: #936508;
-  background: #ffc42b;
+  color: #ad0808;
   padding: 0 7px;
 }
 
